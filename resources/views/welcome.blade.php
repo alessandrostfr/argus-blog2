@@ -26,7 +26,7 @@
                     {{-- Recorremos los últimos 4 posts --}}
                     @foreach ($latestPosts as $post)
                         <div class="slider__item swiper-slide"
-                            style="background-image: url('{{ $post->featured_image ? asset($post->featured_image) : asset('assets/img/blog/1.jpg') }}');">
+                            style="background-image: url('{{ $post->featured_image ? asset($post->featured_image) : asset('assets/img/blog/1.png') }}');">
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class="col-xl-7 col-lg-9 col-md-12">
@@ -63,7 +63,7 @@
                                             <ul class="slider__meta list-inline">
                                                 <li class="slider__meta-item">
                                                     <a href="#" class="slider__meta-link">
-                                                        <img src="{{ asset('assets/img/author/1.jpg') }}"
+                                                        <img src="{{ asset('assets/img/author/1.png') }}"
                                                             alt="Autor {{ $post->user->name }}"
                                                             class="slider__meta-img">
                                                     </a>
@@ -102,7 +102,7 @@
                             <div class="post-slider">
 
                                 {{-- Imagen destacada del post o fallback --}}
-                                <img src="{{ $post->featured_image ? asset($post->featured_image) : asset('assets/img/blog/1.jpg') }}"
+                                <img src="{{ $post->featured_image ? asset($post->featured_image) : asset('assets/img/blog/1.png') }}"
                                     alt="{{ $post->title }}" class="post-slider__img">
 
                                 <div class="post-slider__content">
@@ -140,7 +140,7 @@
                                 {{-- Imagen del post --}}
                                 <div class="post-card__image">
                                     <a href="{{ route('posts.show', $post->slug) }}">
-                                        <img src="{{ $post->featured_image ? asset($post->featured_image) : asset('assets/img/blog/1.jpg') }}"
+                                        <img src="{{ $post->featured_image ? asset($post->featured_image) : asset('assets/img/blog/1.png') }}"
                                             alt="{{ $post->title }}">
                                     </a>
                                 </div>
