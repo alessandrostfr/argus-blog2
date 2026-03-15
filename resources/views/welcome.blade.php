@@ -49,7 +49,7 @@
 
                                             {{-- Título del post --}}
                                             <h1 class="slider__title">
-                                                <a href="{{ route('posts.show', $post->slug) }}"
+                                                <a href="{{ route('posts.show', ['id' => $post->id, 'slug' => $post->slug]) }}"
                                                     class="slider__title-link">
                                                     {{ $post->title }}
                                                 </a>
@@ -136,7 +136,7 @@
 
                                 {{-- Imagen del post --}}
                                 <div class="post-card__image">
-                                    <a href="{{ route('posts.show', $post->slug) }}">
+                                    <a href="{{ route('posts.show', ['id' => $post->id, 'slug' => $post->slug]) }}">
                                         <img src="{{ Storage::url($post->featured_image) }}"
                                             alt="{{ $post->title }}">
                                     </a>
@@ -159,7 +159,8 @@
 
                                     {{-- Título del post --}}
                                     <h5 class="post-card__title">
-                                        <a href="{{ route('posts.show', $post->slug) }}" class="post-card__title-link">
+                                        <a href="{{ route('posts.show', ['id' => $post->id, 'slug' => $post->slug]) }}"
+                                            class="post-card__title-link">
                                             {{ $post->title }}
                                         </a>
                                     </h5>

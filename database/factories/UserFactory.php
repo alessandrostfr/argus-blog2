@@ -26,12 +26,56 @@ class UserFactory extends Factory
         $createdAt = fake()->dateTimeBetween('-1 year', 'now');
 
         return [
+
+            /*
+        |--------------------------------------------------------------------------
+        | Datos básicos del usuario
+        |--------------------------------------------------------------------------
+        */
+
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
+
+            /*
+        |--------------------------------------------------------------------------
+        | Perfil del autor
+        |--------------------------------------------------------------------------
+        | Estos campos se usarán en la página del autor o en
+        | el bloque de autor debajo del post.
+        */
+
+            'descripcion' => fake()->paragraph(2),
+
+            'urlfacebook' => fake()->optional()->url(),
+            'urlinstagram' => fake()->optional()->url(),
+            'urlyoutube' => fake()->optional()->url(),
+
+            /*
+        |--------------------------------------------------------------------------
+        | Seguridad
+        |--------------------------------------------------------------------------
+        */
+
             'password' => Hash::make('password'),
+
+            /*
+        |--------------------------------------------------------------------------
+        | Rol del usuario
+        |--------------------------------------------------------------------------
+        | De momento generamos solo usuarios normales.
+        */
+
             'role' => fake()->randomElement(['user']),
+
             'remember_token' => Str::random(10),
+
+            /*
+        |--------------------------------------------------------------------------
+        | Fechas
+        |--------------------------------------------------------------------------
+        */
+
             'created_at' => $createdAt,
             'updated_at' => $createdAt,
         ];
@@ -42,7 +86,7 @@ class UserFactory extends Factory
      */
     public function unverified(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'email_verified_at' => null,
         ]);
     }

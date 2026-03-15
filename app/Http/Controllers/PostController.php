@@ -32,4 +32,28 @@ class PostController extends Controller
         // Retornamos la vista welcome con ambas variables
         return view('welcome', compact('latestPosts', 'posts'));
     }
+
+    /**
+     * Mostrar un post en detalle
+     */
+    public function show($id, $slug)
+    {
+        // Buscamos el post por id
+        $post = Post::with(['user', 'categories', 'tags'])
+            ->where('id', $id)
+            ->where('status', 'published')
+            ->firstOrFail();
+
+        // Verificamos que el slug coincida
+        // Esto evita problemas de SEO o URLs incorrectas
+        if ($post->slug !== $slug) {
+            return redirect()->route('posts.show', [
+                'id' => $post->id,
+                'slug' => $post->slug
+            ]);
+        }
+
+        // Retornamos la vista del post
+        return view('blog.view', compact('post'));
+    }
 }
