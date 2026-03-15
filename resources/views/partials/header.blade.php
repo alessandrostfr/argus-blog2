@@ -25,7 +25,7 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle active" href="javascript:void(0)"
                                     id="navbarDropdown1" role="button" data-bs-toggle="dropdown"
-                                    aria-expanded="false">Home</a>
+                                    aria-expanded="false">Inicio</a>
                                 <ul class="dropdown-menu ">
                                     <li><a class="dropdown-item " href="index.html">homepage 1 </a></li>
                                     <li><a class="dropdown-item active" href="index-2.html">homepage 2</a></li>
@@ -42,7 +42,7 @@
                             <!--Posts features -->
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle " href="javascript:void(0)" id="navbarDropdown2"
-                                    role="button" data-bs-toggle="dropdown" aria-expanded="false">Post features</a>
+                                    role="button" data-bs-toggle="dropdown" aria-expanded="false">Posts</a>
                                 <ul class="dropdown-menu ">
                                     <li><a class="dropdown-item " href="post-default.html">post default </a></li>
                                     <li><a class="dropdown-item" href="post-left-sidebar.html">post left sidebar </a>
