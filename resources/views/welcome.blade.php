@@ -32,12 +32,16 @@
                                     <div class="col-xl-7 col-lg-9 col-md-12">
                                         <div class="slider__item-content">
 
-                                            {{-- Categoría principal del post --}}
+                                            {{-- Categorías  del post --}}
                                             @if ($post->categories->isNotEmpty())
-                                                <a href="#" class="category">
-                                                    {{ $post->categories->first()->name }}
-                                                </a>
+                                                {{-- Mostramos todas las categorías del post --}}
+                                                @foreach ($post->categories as $category)
+                                                    <a href="#" class="category">
+                                                        {{ $category->name }}
+                                                    </a>
+                                                @endforeach
                                             @else
+                                                {{-- Si el post no tiene categorías --}}
                                                 <a href="#" class="category">
                                                     Sin categoría
                                                 </a>
@@ -127,354 +131,133 @@
         <section class="mt-90">
             <div class="container-fluid">
                 <div class="row">
-                    <!--Post-1-->
-                    <div class="col-xl-4 col-lg-6 col-md-6">
-                        <div class="post-card post-card--default">
-                            <div class="post-card__image">
-                                <a href="post-default.html">
-                                    <img src="assets/img/blog/25.jpg" alt="">
-                                </a>
-                            </div>
 
-                            <div class="post-card__content">
-                                <a href="blog-grid.html" class="category">lifestyle</a>
-                                <h5 class="post-card__title">
-                                    <a href="post-default.html" class="post-card__title-link">5 Effective Ways I’m
-                                        Finding Focus in a Busy Season of Life</a>
-                                </h5>
-                                <p class="post-card__exerpt">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    Odit quam atque ipsa laborum sunt distinctio...
-                                </p>
+                    {{-- Recorremos los posts paginados --}}
+                    @forelse ($posts as $post)
+                        <div class="col-xl-4 col-lg-6 col-md-6">
+                            <div class="post-card post-card--default">
 
-                                <ul class="post-card__meta list-inline">
-                                    <li class="post-card__meta-item">
-                                        <a href="author.html" class="post-card__meta-link">
-                                            <img src="assets/img/author/1.jpg" alt=""
-                                                class="post-card__meta-img">
+                                {{-- Imagen del post --}}
+                                <div class="post-card__image">
+                                    <a href="{{ route('posts.show', $post->slug) }}">
+                                        <img src="{{ $post->featured_image ? asset($post->featured_image) : asset('assets/img/blog/1.jpg') }}"
+                                            alt="{{ $post->title }}">
+                                    </a>
+                                </div>
+
+                                <div class="post-card__content">
+
+                                    {{-- Mostramos todas las categorías del post --}}
+                                    @if ($post->categories->isNotEmpty())
+                                        @foreach ($post->categories as $category)
+                                            <a href="#" class="category">
+                                                {{ $category->name }}
+                                            </a>
+                                        @endforeach
+                                    @else
+                                        <a href="#" class="category">
+                                            Sin categoría
                                         </a>
-                                    </li>
-                                    <li class="post-card__meta-item ">
-                                        <a href="author.html" class="post-card__meta-link">David Smith</a>
-                                    </li>
-                                    <li class="post-card__meta-item">
-                                        <span class="dot"></span> February 10, 2022
-                                    </li>
-                                </ul>
+                                    @endif
+
+                                    {{-- Título del post --}}
+                                    <h5 class="post-card__title">
+                                        <a href="{{ route('posts.show', $post->slug) }}" class="post-card__title-link">
+                                            {{ $post->title }}
+                                        </a>
+                                    </h5>
+
+                                    {{-- Resumen del post --}}
+                                    <p class="post-card__exerpt">
+                                        {{ $post->summary ?? \Illuminate\Support\Str::limit(strip_tags($post->content), 120) }}
+                                    </p>
+
+                                    {{-- Metadatos del post --}}
+                                    <ul class="post-card__meta list-inline">
+                                        <li class="post-card__meta-item">
+                                            <a href="#" class="post-card__meta-link">
+                                                <img src="{{ asset('assets/img/author/1.jpg') }}"
+                                                    alt="Autor {{ $post->user->name }}" class="post-card__meta-img">
+                                            </a>
+                                        </li>
+
+                                        <li class="post-card__meta-item">
+                                            <a href="#" class="post-card__meta-link">
+                                                {{ $post->user->name }}
+                                            </a>
+                                        </li>
+
+                                        <li class="post-card__meta-item">
+                                            <span class="dot"></span>
+                                            {{ $post->published_at?->format('d/m/Y') ?? $post->created_at->format('d/m/Y') }}
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <!--Post-2-->
-                    <div class="col-xl-4 col-lg-6 col-md-6">
-                        <div class="post-card post-card--default">
-                            <div class="post-card__image">
-                                <a href="post-default.html">
-                                    <img src="assets/img/blog/23.jpg" alt="">
-                                </a>
-                            </div>
-
-                            <div class="post-card__content">
-                                <a href="blog-grid.html" class="category">lifestyle</a>
-                                <h5 class="post-card__title">
-                                    <a href="post-default.html" class="post-card__title-link">Get the Most Out of
-                                        Iceland with our 10 Travel Tips</a>
-                                </h5>
-                                <p class="post-card__exerpt">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    Odit quam atque ipsa laborum sunt distinctio...
-                                </p>
-
-                                <ul class="post-card__meta list-inline">
-                                    <li class="post-card__meta-item">
-                                        <a href="author.html" class="post-card__meta-link">
-                                            <img src="assets/img/author/1.jpg" alt=""
-                                                class="post-card__meta-img">
-                                        </a>
-                                    </li>
-                                    <li class="post-card__meta-item ">
-                                        <a href="author.html" class="post-card__meta-link">David Smith</a>
-                                    </li>
-                                    <li class="post-card__meta-item">
-                                        <span class="dot"></span> February 10, 2022
-                                    </li>
-                                </ul>
-                            </div>
+                    @empty
+                        {{-- Mensaje si no hay posts --}}
+                        <div class="col-12">
+                            <p>No hay posts publicados todavía.</p>
                         </div>
-                    </div>
+                    @endforelse
 
-                    <!--Post-3-->
-                    <div class="col-xl-4 col-lg-6 col-md-6">
-                        <div class="post-card post-card--default">
-                            <div class="post-card__image">
-                                <a href="post-default.html">
-                                    <img src="assets/img/blog/24.jpg" alt="">
-                                </a>
-                            </div>
-
-                            <div class="post-card__content">
-                                <a href="blog-grid.html" class="category">lifestyle</a>
-                                <h5 class="post-card__title">
-                                    <a href="post-default.html" class="post-card__title-link">7 Holiday Decor Ideas
-                                        and Exactly What I Love About Each One</a>
-                                </h5>
-                                <p class="post-card__exerpt">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    Odit quam atque ipsa laborum sunt distinctio...
-                                </p>
-
-                                <ul class="post-card__meta list-inline">
-                                    <li class="post-card__meta-item">
-                                        <a href="author.html" class="post-card__meta-link">
-                                            <img src="assets/img/author/1.jpg" alt=""
-                                                class="post-card__meta-img">
-                                        </a>
-                                    </li>
-                                    <li class="post-card__meta-item ">
-                                        <a href="author.html" class="post-card__meta-link">David Smith</a>
-                                    </li>
-                                    <li class="post-card__meta-item">
-                                        <span class="dot"></span> February 10, 2022
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!--Post-4-->
-                    <div class="col-xl-4 col-lg-6 col-md-6">
-                        <div class="post-card post-card--default">
-                            <div class="post-card__image">
-                                <a href="post-default.html">
-                                    <img src="assets/img/blog/21.jpg" alt="">
-                                </a>
-                            </div>
-
-                            <div class="post-card__content">
-                                <a href="blog-grid.html" class="category">lifestyle</a>
-                                <h5 class="post-card__title">
-                                    <a href="post-default.html" class="post-card__title-link">7 Holiday Decor Ideas
-                                        and Exactly What I Love About Each One</a>
-                                </h5>
-                                <p class="post-card__exerpt">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    Odit quam atque ipsa laborum sunt distinctio...
-                                </p>
-
-                                <ul class="post-card__meta list-inline">
-                                    <li class="post-card__meta-item">
-                                        <a href="author.html" class="post-card__meta-link">
-                                            <img src="assets/img/author/1.jpg" alt=""
-                                                class="post-card__meta-img">
-                                        </a>
-                                    </li>
-                                    <li class="post-card__meta-item ">
-                                        <a href="author.html" class="post-card__meta-link">David Smith</a>
-                                    </li>
-                                    <li class="post-card__meta-item">
-                                        <span class="dot"></span> February 10, 2022
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!--Post-5-->
-                    <div class="col-xl-4 col-lg-6 col-md-6">
-                        <div class="post-card post-card--default">
-                            <div class="post-card__image">
-                                <a href="post-default.html">
-                                    <img src="assets/img/blog/22.jpg" alt="">
-                                </a>
-                            </div>
-
-                            <div class="post-card__content">
-                                <a href="blog-grid.html" class="category">lifestyle</a>
-                                <h5 class="post-card__title">
-                                    <a href="post-default.html" class="post-card__title-link">Get the Most Out of
-                                        Iceland with our 10 Travel Tips</a>
-                                </h5>
-                                <p class="post-card__exerpt">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    Odit quam atque ipsa laborum sunt distinctio...
-                                </p>
-
-                                <ul class="post-card__meta list-inline">
-                                    <li class="post-card__meta-item">
-                                        <a href="author.html" class="post-card__meta-link">
-                                            <img src="assets/img/author/1.jpg" alt=""
-                                                class="post-card__meta-img">
-                                        </a>
-                                    </li>
-                                    <li class="post-card__meta-item ">
-                                        <a href="author.html" class="post-card__meta-link">David Smith</a>
-                                    </li>
-                                    <li class="post-card__meta-item">
-                                        <span class="dot"></span> February 10, 2022
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!--Post-6-->
-                    <div class="col-xl-4 col-lg-6 col-md-6">
-                        <div class="post-card post-card--default">
-                            <div class="post-card__image">
-                                <a href="post-default.html">
-                                    <img src="assets/img/blog/27.jpg" alt="">
-                                </a>
-                            </div>
-
-                            <div class="post-card__content">
-                                <a href="blog-grid.html" class="category">lifestyle</a>
-                                <h5 class="post-card__title">
-                                    <a href="post-default.html" class="post-card__title-link">Get the Most Out of
-                                        Iceland with our 10 Travel Tips</a>
-                                </h5>
-                                <p class="post-card__exerpt">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    Odit quam atque ipsa laborum sunt distinctio...
-                                </p>
-
-                                <ul class="post-card__meta list-inline">
-                                    <li class="post-card__meta-item">
-                                        <a href="author.html" class="post-card__meta-link">
-                                            <img src="assets/img/author/1.jpg" alt=""
-                                                class="post-card__meta-img">
-                                        </a>
-                                    </li>
-                                    <li class="post-card__meta-item ">
-                                        <a href="author.html" class="post-card__meta-link">David Smith</a>
-                                    </li>
-                                    <li class="post-card__meta-item">
-                                        <span class="dot"></span> February 10, 2022
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!--Post-7-->
-                    <div class="col-xl-4 col-lg-6 col-md-6">
-                        <div class="post-card post-card--default">
-                            <div class="post-card__image">
-                                <a href="post-default.html">
-                                    <img src="assets/img/blog/26.jpg" alt="">
-                                </a>
-                            </div>
-
-                            <div class="post-card__content">
-                                <a href="blog-grid.html" class="category">lifestyle</a>
-                                <h5 class="post-card__title">
-                                    <a href="post-default.html" class="post-card__title-link">5 Effective Ways I’m
-                                        Finding Focus in a Busy Season of Life</a>
-                                </h5>
-                                <p class="post-card__exerpt">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    Odit quam atque ipsa laborum sunt distinctio...
-                                </p>
-
-                                <ul class="post-card__meta list-inline">
-                                    <li class="post-card__meta-item">
-                                        <a href="author.html" class="post-card__meta-link">
-                                            <img src="assets/img/author/1.jpg" alt=""
-                                                class="post-card__meta-img">
-                                        </a>
-                                    </li>
-                                    <li class="post-card__meta-item ">
-                                        <a href="author.html" class="post-card__meta-link">David Smith</a>
-                                    </li>
-                                    <li class="post-card__meta-item">
-                                        <span class="dot"></span> February 10, 2022
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!--Post-8-->
-                    <div class="col-xl-4 col-lg-6 col-md-6">
-                        <div class="post-card post-card--default">
-                            <div class="post-card__image">
-                                <a href="post-default.html">
-                                    <img src="assets/img/blog/28.jpg" alt="">
-                                </a>
-                            </div>
-
-                            <div class="post-card__content">
-                                <a href="blog-grid.html" class="category">lifestyle</a>
-                                <h5 class="post-card__title">
-                                    <a href="post-default.html" class="post-card__title-link">What Are Your Tips for
-                                        Hosting an Easy Birthday Party?</a>
-                                </h5>
-                                <p class="post-card__exerpt">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    Odit quam atque ipsa laborum sunt distinctio...
-                                </p>
-
-                                <ul class="post-card__meta list-inline">
-                                    <li class="post-card__meta-item">
-                                        <a href="author.html" class="post-card__meta-link">
-                                            <img src="assets/img/author/1.jpg" alt=""
-                                                class="post-card__meta-img">
-                                        </a>
-                                    </li>
-                                    <li class="post-card__meta-item ">
-                                        <a href="author.html" class="post-card__meta-link">David Smith</a>
-                                    </li>
-                                    <li class="post-card__meta-item">
-                                        <span class="dot"></span> February 10, 2022
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!--Post-9-->
-                    <div class="col-xl-4 col-lg-6 col-md-6">
-                        <div class="post-card post-card--default">
-                            <div class="post-card__image">
-                                <a href="post-default.html">
-                                    <img src="assets/img/blog/28.jpg" alt="">
-                                </a>
-                            </div>
-
-                            <div class="post-card__content">
-                                <a href="blog-grid.html" class="category">lifestyle</a>
-                                <h5 class="post-card__title">
-                                    <a href="post-default.html" class="post-card__title-link">Get the Most Out of
-                                        Iceland with our 10 Travel Tips</a>
-                                </h5>
-                                <p class="post-card__exerpt">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    Odit quam atque ipsa laborum sunt distinctio...
-                                </p>
-
-                                <ul class="post-card__meta list-inline">
-                                    <li class="post-card__meta-item">
-                                        <a href="author.html" class="post-card__meta-link">
-                                            <img src="assets/img/author/1.jpg" alt=""
-                                                class="post-card__meta-img">
-                                        </a>
-                                    </li>
-                                    <li class="post-card__meta-item ">
-                                        <a href="author.html" class="post-card__meta-link">David Smith</a>
-                                    </li>
-                                    <li class="post-card__meta-item">
-                                        <span class="dot"></span> February 10, 2022
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
-                <!--pagination-->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <ul class="pagination list-inline">
-                            <li class="pagination__item pagination__item--active"><a href="#"
-                                    class="pagination__link">1</a></li>
-                            <li class="pagination__item"><a href="#" class="pagination__link">2</a></li>
-                            <li class="pagination__item"><a href="#" class="pagination__link">3</a></li>
-                            <li class="pagination__item"><a href="#" class="pagination__link">4</a></li>
-                            <li class="pagination__item"><a href="#" class="pagination__link"><i
-                                        class="bi bi-arrow-right pagination__icon"></i></a></li>
-                        </ul>
+                {{-- Paginación --}}
+                @if ($posts->hasPages())
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <ul class="pagination list-inline">
+
+                                {{-- Página anterior --}}
+                                @if ($posts->onFirstPage())
+                                    <li class="pagination__item disabled">
+                                        <span class="pagination__link">
+                                            <i class="bi bi-arrow-left pagination__icon"></i>
+                                        </span>
+                                    </li>
+                                @else
+                                    <li class="pagination__item">
+                                        <a href="{{ $posts->previousPageUrl() }}" class="pagination__link">
+                                            <i class="bi bi-arrow-left pagination__icon"></i>
+                                        </a>
+                                    </li>
+                                @endif
+
+                                {{-- Números de página --}}
+                                @for ($i = 1; $i <= $posts->lastPage(); $i++)
+                                    @if ($i == $posts->currentPage())
+                                        <li class="pagination__item pagination__item--active">
+                                            <span class="pagination__link">{{ $i }}</span>
+                                        </li>
+                                    @else
+                                        <li class="pagination__item">
+                                            <a href="{{ $posts->url($i) }}"
+                                                class="pagination__link">{{ $i }}</a>
+                                        </li>
+                                    @endif
+                                @endfor
+
+                                {{-- Página siguiente --}}
+                                @if ($posts->hasMorePages())
+                                    <li class="pagination__item">
+                                        <a href="{{ $posts->nextPageUrl() }}" class="pagination__link">
+                                            <i class="bi bi-arrow-right pagination__icon"></i>
+                                        </a>
+                                    </li>
+                                @else
+                                    <li class="pagination__item disabled">
+                                        <span class="pagination__link">
+                                            <i class="bi bi-arrow-right pagination__icon"></i>
+                                        </span>
+                                    </li>
+                                @endif
+
+                            </ul>
+                        </div>
                     </div>
-                </div>
+                @endif
             </div>
         </section>
         <!--/-->

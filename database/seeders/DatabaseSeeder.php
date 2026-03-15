@@ -41,24 +41,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
-        /*
-        |--------------------------------------------------------------------------
-        | 2. CREAR USUARIO EDITOR
-        |--------------------------------------------------------------------------
-        | Creamos un usuario editor que podrá gestionar posts
-        | pero no tendrá permisos completos como el admin.
-        */
 
-        $editor = User::create([
-            'name' => 'Editor Principal',
-            'email' => 'editor@argusblog.com',
-            'email_verified_at' => now(),
-            'password' => Hash::make('password'),
-            'role' => 'editor',
-            'remember_token' => Str::random(10),
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
 
 
         /*
@@ -68,7 +51,7 @@ class DatabaseSeeder extends Seeder
         | Generamos 3 usuarios adicionales usando factories.
         */
 
-        $users = User::factory(3)->create([
+        $users = User::factory(4)->create([
             'role' => 'user',
         ]);
 
@@ -81,7 +64,7 @@ class DatabaseSeeder extends Seeder
         | asignarlos aleatoriamente como autores de posts.
         */
 
-        $allUsers = collect([$admin, $editor])->merge($users);
+        $allUsers = collect([$admin])->merge($users);
 
 
         /*
@@ -91,7 +74,7 @@ class DatabaseSeeder extends Seeder
         | Generamos 5 categorías para clasificar los posts.
         */
 
-        $categories = Category::factory(5)->create();
+        $categories = Category::factory(10)->create();
 
 
         /*
@@ -102,7 +85,7 @@ class DatabaseSeeder extends Seeder
         | los posts con mayor detalle.
         */
 
-        $tags = Tag::factory(5)->create();
+        $tags = Tag::factory(10)->create();
 
 
         /*
@@ -118,7 +101,7 @@ class DatabaseSeeder extends Seeder
         | - resumen
         */
 
-        Post::factory(50)->create([
+        Post::factory(200)->create([
             'user_id' => $allUsers->random()->id
         ])
         ->each(function ($post) use ($tags, $categories) {
@@ -145,7 +128,7 @@ class DatabaseSeeder extends Seeder
             */
 
             $post->categories()->attach(
-                $categories->random(rand(1,2))->pluck('id')
+                $categories->random(rand(1,3))->pluck('id')
             );
 
 
