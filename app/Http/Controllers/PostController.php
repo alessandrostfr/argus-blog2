@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Category;
+use App\Models\Tag;
+
 
 class PostController extends Controller
 {
@@ -53,7 +56,59 @@ class PostController extends Controller
             ]);
         }
 
-        // Retornamos la vista del post
-        return view('blog.view', compact('post'));
+        $latestSidebarPosts = Post::where('status', 'published')
+            ->where('id', '!=', $post->id) // evitamos mostrar el mismo post
+            ->latest('published_at')
+            ->take(4)
+            ->get();
+
+        // Categorías con contador de posts publicados
+        $categories = Category::withCount([
+            'posts as published_posts_count' => function ($query) {
+                $query->where('status', 'published');
+            }
+        ])
+            ->orderByDesc('published_posts_count')
+            ->get();
+
+
+        // Post anterior
+        $previousPost = Post::where('status', 'published')
+            ->where('id', '<', $post->id)
+            ->orderByDesc('id')
+            ->first();
+
+        // Post siguiente
+        $nextPost = Post::where('status', 'published')
+            ->where('id', '>', $post->id)
+            ->orderBy('id')
+            ->first();
+
+        /*
+        |--------------------------------------------------------------------------
+        | TAGS PARA EL SIDEBAR
+        |--------------------------------------------------------------------------
+        | Obtenemos los tags con número de posts publicados
+        */
+
+        $tags = Tag::withCount([
+            'posts as published_posts_count' => function ($query) {
+                $query->where('status', 'published');
+            }
+        ])
+            ->having('published_posts_count', '>', 0)
+            ->orderByDesc('published_posts_count')
+            ->take(20) // límite opcional
+            ->get();
+
+        // Retornamos la vista
+        return view('blog.view', compact(
+            'post',
+            'latestSidebarPosts',
+            'categories',
+            'previousPost',
+            'nextPost',
+            'tags'
+        ));
     }
 }
