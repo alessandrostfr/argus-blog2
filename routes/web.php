@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PostController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +17,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Página principal
+Route::get('/', [PostController::class, 'index'])->name('home');
+
+// Detalle de un post
+Route::get('/posts/{slug}', [PostController::class, 'show'])->name('posts.show');
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
