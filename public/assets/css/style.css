@@ -1061,15 +1061,21 @@ ul {
     font-weight: 800;
     font-size: 15px;
     color: #131315;
-    transition: all 0.5s ease-in-out;
-    padding: 0px 0px 3px 0px;
+
+    padding: 0 0 3px;
     margin-bottom: 6px;
+
+    /* Limitar el texto a 2 líneas */
     overflow: hidden;
     text-overflow: ellipsis;
+
     display: -webkit-box;
-    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+
     font-family: "Inter Tight", sans-serif;
+    transition: all 0.5s ease-in-out;
 }
 .widget__latest-posts-title a {
     display: inline;
@@ -1264,13 +1270,19 @@ ul {
     font-weight: 800;
     font-size: 15px;
     color: #131315;
-    padding: 0px 0px 3px 0px;
+
+    padding: 0 0 3px;
     margin-bottom: 6px;
+
+    /* Limitar texto a 2 líneas */
     overflow: hidden;
     text-overflow: ellipsis;
+
     display: -webkit-box;
-    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+
     font-family: "Inter Tight", sans-serif;
     transition: all 0.5s ease-in-out;
 }
@@ -1948,9 +1960,13 @@ ul {
     color: #ffffff;
     overflow: hidden;
     text-overflow: ellipsis;
+
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+
+    line-clamp: 2;
+
     padding: 0px 0px 1px 0px;
     margin-bottom: 6px;
     font-weight: 700;
