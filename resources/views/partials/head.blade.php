@@ -8,7 +8,7 @@
 
 
 <!-- favicon -->
-<link rel="icon" sizes="32x32" href="{{ asset('assets/img/faviconAB2.png') }}">
+<link rel="icon" sizes="32x32" href="{{ asset('assets/img/favicon-512.png') }}">
 
 <!-- Title -->
 

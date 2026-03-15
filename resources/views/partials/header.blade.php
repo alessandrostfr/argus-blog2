@@ -5,13 +5,13 @@
             <div class="logo">
                 <!-- Logo versión modo oscuro -->
                 <a class="logo__link logo--dark" href="{{ url('/') }}">
-                    <img src="{{ asset('assets/img/logo/logoABsinfondo.png') }}" alt="ArgusBlog logo dark"
+                    <img src="{{ asset('assets/img/logo/logo.svg') }}" alt="ArgusBlog logo dark"
                         style="height:50px; width:auto;" class="logo__img">
                 </a>
 
                 <!-- Logo versión modo claro -->
                 <a class="logo__link logo--light" href="{{ url('/') }}">
-                    <img src="{{ asset('assets/img/logo/logoABsinfondo.png') }}" alt="ArgusBlog logo light"
+                    <img src="{{ asset('assets/img/logo/logo.svg') }}" alt="ArgusBlog logo light"
                         style="height:50px; width:auto;" class="logo__img">
                 </a>
             </div>
