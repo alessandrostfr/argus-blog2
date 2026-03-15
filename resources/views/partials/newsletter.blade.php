@@ -3,9 +3,14 @@
         <div class="row">
             <div class="col-lg-6 col-md-10 col-sm-11 m-auto">
                 <div class="newslettre">
-                    <div class="newslettre__info ">
-                        <h3 class="newslettre__title">Get The Best Blog Stories into Your inbox!</h3>
-                        <p class="newslettre__desc"> Sign up for free and be the first to get notified about new posts.
+                    <div class="newslettre__info">
+                        <h3 class="newslettre__title">
+                            Un espacio para desarrolladores
+                        </h3>
+
+                        <p class="newslettre__desc">
+                            Descubre tutoriales, comparte conocimiento y aprende nuevas
+                            tecnologías junto a otros programadores.
                         </p>
                     </div>
 

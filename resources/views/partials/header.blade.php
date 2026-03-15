@@ -94,23 +94,37 @@
             <div class=" header__action-items">
                 <!--header-social-->
                 <ul class="list-inline social-media social-media--layout-one">
-                    <li class="social-media__item">
-                        <a href="#" class="social-media__link">
-                            <i class="bi bi-facebook"></i>
-                        </a>
-                    </li>
 
-                    <li class="social-media__item">
-                        <a href="#" class="social-media__link">
-                            <i class="bi bi-instagram"></i>
-                        </a>
-                    </li>
-                    <li class="social-media__item">
-                        <a href="#" class="social-media__link"><i class="bi bi-twitter-x"></i></a>
-                    </li>
-                    <li class="social-media__item">
-                        <a href="#" class="social-media__link"><i class="bi bi-youtube"></i></a>
-                    </li>
+                    {{-- Facebook --}}
+                    @if (social('facebook'))
+                        <li class="social-media__item">
+                            <a href="{{ social('facebook') }}" class="social-media__link" target="_blank"
+                                rel="noopener">
+                                <i class="bi bi-facebook"></i>
+                            </a>
+                        </li>
+                    @endif
+
+                    {{-- Instagram --}}
+                    @if (social('instagram'))
+                        <li class="social-media__item">
+                            <a href="{{ social('instagram') }}" class="social-media__link" target="_blank"
+                                rel="noopener">
+                                <i class="bi bi-instagram"></i>
+                            </a>
+                        </li>
+                    @endif
+
+                    {{-- Youtube --}}
+                    @if (social('youtube'))
+                        <li class="social-media__item">
+                            <a href="{{ social('youtube') }}" class="social-media__link" target="_blank"
+                                rel="noopener">
+                                <i class="bi bi-youtube"></i>
+                            </a>
+                        </li>
+                    @endif
+
                 </ul>
 
                 <!--theme-switch-->
