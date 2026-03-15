@@ -176,7 +176,7 @@
                                     <ul class="post-card__meta list-inline">
                                         <li class="post-card__meta-item">
                                             <a href="#" class="post-card__meta-link">
-                                                <img src="{{ asset('assets/img/author/1.jpg') }}"
+                                                <img src="{{ asset('assets/img/author/1.png') }}"
                                                     alt="Autor {{ $post->user->name }}" class="post-card__meta-img">
                                             </a>
                                         </li>
