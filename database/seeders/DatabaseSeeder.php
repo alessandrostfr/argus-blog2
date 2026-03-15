@@ -26,7 +26,6 @@ class DatabaseSeeder extends Seeder
         | 1. CREAR USUARIO ADMIN
         |--------------------------------------------------------------------------
         | Creamos manualmente un usuario administrador del sistema.
-        | Este usuario servirá para acceder al panel de administración.
         */
 
         $admin = User::create([
@@ -41,14 +40,10 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
-
-
-
         /*
         |--------------------------------------------------------------------------
-        | 3. CREAR USUARIOS NORMALES
+        | 2. CREAR USUARIOS NORMALES
         |--------------------------------------------------------------------------
-        | Generamos 3 usuarios adicionales usando factories.
         */
 
         $users = User::factory(10)->create([
@@ -58,10 +53,8 @@ class DatabaseSeeder extends Seeder
 
         /*
         |--------------------------------------------------------------------------
-        | 4. AGRUPAR TODOS LOS USUARIOS
+        | 3. AGRUPAR TODOS LOS USUARIOS
         |--------------------------------------------------------------------------
-        | Unimos admin, editor y users en una colección para poder
-        | asignarlos aleatoriamente como autores de posts.
         */
 
         $allUsers = collect([$admin])->merge($users);
@@ -69,9 +62,8 @@ class DatabaseSeeder extends Seeder
 
         /*
         |--------------------------------------------------------------------------
-        | 5. CREAR CATEGORÍAS
+        | 4. CREAR CATEGORÍAS
         |--------------------------------------------------------------------------
-        | Generamos 5 categorías para clasificar los posts.
         */
 
         $categories = Category::factory(10)->create();
@@ -79,10 +71,8 @@ class DatabaseSeeder extends Seeder
 
         /*
         |--------------------------------------------------------------------------
-        | 6. CREAR TAGS
+        | 5. CREAR TAGS
         |--------------------------------------------------------------------------
-        | Generamos 5 etiquetas que se usarán para clasificar
-        | los posts con mayor detalle.
         */
 
         $tags = Tag::factory(10)->create();
@@ -90,74 +80,98 @@ class DatabaseSeeder extends Seeder
 
         /*
         |--------------------------------------------------------------------------
+        | 6. IMÁGENES DE PRUEBA
+        |--------------------------------------------------------------------------
+        | Estas imágenes existen en:
+        | storage/app/public/blog
+        */
+
+        $images = [
+            'blog/1.jpg',
+            'blog/2.jpg',
+            'blog/3.jpg',
+            'blog/4.jpg',
+            'blog/5.jpg',
+            'blog/6.jpg',
+            'blog/7.jpg',
+            'blog/8.jpg',
+            'blog/9.jpg',
+            'blog/10.jpg',
+            'blog/11.jpg',
+            'blog/12.jpg',
+        ];
+
+
+        /*
+        |--------------------------------------------------------------------------
         | 7. CREAR POSTS
         |--------------------------------------------------------------------------
-        | Generamos 50 posts usando la factory.
-        | Cada post tendrá:
-        | - autor aleatorio
-        | - título
-        | - slug
-        | - contenido
-        | - resumen
         */
 
-        Post::factory(100)
-        ->make()
-        ->each(function ($post) use ($allUsers, $tags, $categories) {
+        Post::factory(200)
+            ->make()
+            ->each(function ($post) use ($allUsers, $tags, $categories, $images) {
 
-        /*
-        --------------------------------------------------------------
-        | ASIGNAR AUTOR ALEATORIO A CADA POST
-        --------------------------------------------------------------
-        | Aquí sí elegimos un usuario distinto de forma aleatoria
-        | para cada post individualmente.
-        */
+                /*
+                --------------------------------------------------------------
+                | ASIGNAR AUTOR ALEATORIO
+                --------------------------------------------------------------
+                */
 
-        $post->user_id = $allUsers->random()->id;
+                $post->user_id = $allUsers->random()->id;
 
-        /*
-        --------------------------------------------------------------
-        | GUARDAR EL POST EN BASE DE DATOS
-        --------------------------------------------------------------
-        */
 
-        $post->save();
+                /*
+                --------------------------------------------------------------
+                | ASIGNAR IMAGEN DESTACADA ALEATORIA
+                --------------------------------------------------------------
+                */
 
-        /*
-        --------------------------------------------------------------
-        | ASIGNAR TAGS AL POST
-        --------------------------------------------------------------
-        | Cada post tendrá entre 1 y 3 tags.
-        | Esto llena automáticamente la tabla post_tag.
-        */
+                $post->featured_image = collect($images)->random();
 
-        $post->tags()->attach(
-            $tags->random(rand(1, 3))->pluck('id')
-        );
 
-        /*
-        --------------------------------------------------------------
-        | ASIGNAR CATEGORÍAS AL POST
-        --------------------------------------------------------------
-        | Cada post tendrá entre 1 y 3 categorías.
-        | Esto llena automáticamente la tabla post_categories.
-        */
+                /*
+                --------------------------------------------------------------
+                | GUARDAR POST
+                --------------------------------------------------------------
+                */
 
-        $post->categories()->attach(
-            $categories->random(rand(1, 3))->pluck('id')
-        );
+                $post->save();
 
-        /*
-        --------------------------------------------------------------
-        | CREAR MEDIA PARA EL POST
-        --------------------------------------------------------------
-        | Generamos entre 1 y 3 archivos media para cada post.
-        */
 
-        Media::factory(rand(1, 3))->create([
-            'post_id' => $post->id
-        ]);
-        });
+                /*
+                --------------------------------------------------------------
+                | ASIGNAR TAGS
+                --------------------------------------------------------------
+                */
+
+                $post->tags()->attach(
+                    $tags->random(rand(1, 3))->pluck('id')
+                );
+
+
+                /*
+                --------------------------------------------------------------
+                | ASIGNAR CATEGORÍAS
+                --------------------------------------------------------------
+                */
+
+                $post->categories()->attach(
+                    $categories->random(rand(1, 3))->pluck('id')
+                );
+
+
+                /*
+                --------------------------------------------------------------
+                | CREAR MEDIA PARA EL POST
+                --------------------------------------------------------------
+                */
+
+                Media::factory(rand(1, 3))->create([
+                    'post_id' => $post->id
+                ]);
+
+            });
 
     }
 }

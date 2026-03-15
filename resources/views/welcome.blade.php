@@ -26,7 +26,7 @@
                     {{-- Recorremos los últimos 4 posts --}}
                     @foreach ($latestPosts as $post)
                         <div class="slider__item swiper-slide"
-                            style="background-image: url('{{ $post->featured_image ? asset($post->featured_image) : asset('assets/img/blog/1.png') }}');">
+                            style="background-image: url('{{ Storage::url($post->featured_image) }}')">
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class="col-xl-7 col-lg-9 col-md-12">
@@ -100,9 +100,7 @@
                     @foreach ($latestPosts as $post)
                         <div class="swiper-slide">
                             <div class="post-slider">
-
-                                {{-- Imagen destacada del post o fallback --}}
-                                <img src="{{ $post->featured_image ? asset($post->featured_image) : asset('assets/img/blog/1.png') }}"
+                                <img src="{{ $post->featured_image ? Storage::url($post->featured_image) : asset('assets/img/blog/1.jpg') }}"
                                     alt="{{ $post->title }}" class="post-slider__img">
 
                                 <div class="post-slider__content">
@@ -117,7 +115,6 @@
                                         </li>
                                     </ul>
                                 </div>
-
                             </div>
                         </div>
                     @endforeach
@@ -140,7 +137,7 @@
                                 {{-- Imagen del post --}}
                                 <div class="post-card__image">
                                     <a href="{{ route('posts.show', $post->slug) }}">
-                                        <img src="{{ $post->featured_image ? asset($post->featured_image) : asset('assets/img/blog/1.png') }}"
+                                        <img src="{{ Storage::url($post->featured_image) }}"
                                             alt="{{ $post->title }}">
                                     </a>
                                 </div>
@@ -169,7 +166,7 @@
 
                                     {{-- Resumen del post --}}
                                     <p class="post-card__exerpt">
-                                        {{ $post->summary ?? \Illuminate\Support\Str::limit(strip_tags($post->content), 120) }}
+                                        {{ Str::limit(strip_tags($post->summary ?? $post->content), 80) }}
                                     </p>
 
                                     {{-- Metadatos del post --}}
