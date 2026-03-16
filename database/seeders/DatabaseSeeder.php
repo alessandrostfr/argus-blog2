@@ -28,16 +28,18 @@ class DatabaseSeeder extends Seeder
         | Creamos manualmente un usuario administrador del sistema.
         */
 
-        $admin = User::create([
-            'name' => 'Administrador',
-            'email' => 'admin@argusblog.com',
-            'email_verified_at' => now(),
-            'password' => Hash::make('password'),
-            'role' => 'admin',
-            'remember_token' => Str::random(10),
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        $admin = User::updateOrCreate(
+            [
+                'email' => 'admin@argusblog.com',
+            ],
+            [
+                'name' => 'Administrador',
+                'email_verified_at' => now(),
+                'password' => Hash::make('password'),
+                'role' => 'admin',
+                'remember_token' => Str::random(10),
+            ]
+        );
 
 
         /*
@@ -170,8 +172,6 @@ class DatabaseSeeder extends Seeder
                 Media::factory(rand(1, 3))->create([
                     'post_id' => $post->id
                 ]);
-
             });
-
     }
 }
